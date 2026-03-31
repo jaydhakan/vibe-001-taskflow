@@ -11,6 +11,7 @@ from app.utils.response import ok
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 
 
+# GET /api/tasks — paginated list with optional status, priority, search, sort, and order query params
 @router.get("")
 async def list_tasks(
     status: Literal["todo", "in-progress", "done"] | None = None,
@@ -35,12 +36,14 @@ async def list_tasks(
     )
 
 
+# POST /api/tasks — create a new task, always starts in todo status, returns 201 with the created task
 @router.post("", status_code=201)
 async def create_task(data: TaskCreate) -> dict:
     """Create a new task."""
     return ok(task_service.create_task(data))
 
 
+# GET /api/tasks/stats — must be registered before /{task_id} so FastAPI does not treat 'stats' as an ID
 @router.get("/stats")
 async def get_stats() -> dict:
     """Return task counts grouped by status and priority."""
@@ -66,6 +69,7 @@ async def delete_task(task_id: str) -> dict:
     return ok(None)
 
 
+# POST /api/tasks/{task_id}/complete — advance task from in-progress to done, raises 422 for any other status
 @router.post("/{task_id}/complete")
 async def complete_task(task_id: str) -> dict:
     """Advance task from in-progress to done."""
