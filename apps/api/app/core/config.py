@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """Environment-overridable application settings."""
 
-    DATA_FILE: str = str(pathlib.Path(__file__).parents[3] / "data" / "tasks.json")
+    DATA_FILE: str = str(pathlib.Path(__file__).parents[2] / "data" / "tasks.json")
 
 
 settings = Settings()
