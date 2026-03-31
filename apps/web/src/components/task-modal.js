@@ -17,6 +17,12 @@ const STATUS_LABELS = { 'todo': 'Todo', 'in-progress': 'In Progress', 'done': 'D
 dialog.addEventListener('close', () => {
   form.reset();
   form.onsubmit = null;
+  document.body.classList.remove('modal-open');
+});
+
+// Close on click outside (click on the backdrop area of the dialog element)
+dialog.addEventListener('click', (e) => {
+  if (e.target === dialog) closeModal();
 });
 
 /**
@@ -72,6 +78,7 @@ export function openModal(task, { onSubmit }) {
     await onSubmit(data);
   };
 
+  document.body.classList.add('modal-open');
   dialog.showModal();
   titleInput.focus();
 }

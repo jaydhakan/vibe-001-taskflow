@@ -12,13 +12,24 @@
   <div id="app">
     <header class="app-header">
       <h1>TaskFlow</h1>
-      <button
-        id="add-task-btn"
-        type="button"
-        class="btn btn-primary"
-        data-testid="add-task-btn"
-        data-action="add"
-      >+ Add Task</button>
+      <div class="header-actions">
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button type="button" id="view-list-btn" aria-pressed="true" aria-label="List view" title="List view">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4h10M3 8h10M3 12h10"/></svg>
+          </button>
+          <button type="button" id="view-board-btn" aria-pressed="false" aria-label="Board view" title="Board view">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="3.5" height="10" rx="1"/><rect x="6.25" y="3" width="3.5" height="7" rx="1"/><rect x="10.5" y="3" width="3.5" height="5" rx="1"/></svg>
+          </button>
+        </div>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"></button>
+        <button
+          id="add-task-btn"
+          type="button"
+          class="btn btn-primary"
+          data-testid="add-task-btn"
+          data-action="add"
+        >+ Add Task</button>
+      </div>
     </header>
 
     <div class="controls">
@@ -79,6 +90,8 @@
       </table>
       <div id="pagination" data-testid="pagination" class="pagination"></div>
     </main>
+
+    <div id="board-view" class="board-view" hidden></div>
   </div>
 
   <!-- Task modal -->

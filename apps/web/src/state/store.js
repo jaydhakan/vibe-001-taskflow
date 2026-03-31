@@ -3,6 +3,7 @@ let state = {
   pagination: { total: 0, totalPages: 1, hasNext: false, hasPrevious: false },
   query: { page: 1, limit: 20, search: '', status: '', priority: '', sort: 'createdAt', order: 'desc' },
   selectedTask: null,
+  view: localStorage.getItem('taskflow-view') || 'list',
 };
 
 /**

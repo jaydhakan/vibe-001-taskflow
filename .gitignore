@@ -238,11 +238,3 @@ apps/api/playwright-report/
 
 # macOS
 .DS_Store
-
-# =============================================================================
-# TaskFlow runtime data
-# =============================================================================
-
-# Live task data — never commit real data; data/.gitkeep keeps the dir
-apps/data/tasks.json
-apps/data/tasks.json.tmp

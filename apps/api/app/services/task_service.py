@@ -53,8 +53,15 @@ def get_task(task_id: str) -> dict:
 
 
 def update_task(task_id: str, data: TaskUpdate) -> dict:
-    """Update task fields. Enforces status transition rules when status changes."""
+    """Update task fields. Rejects edits to done tasks. Enforces status transition rules."""
     task = get_task(task_id)
+
+    if task["status"] == "done":
+        raise HTTPException(
+            status_code=422,
+            detail=err("Completed tasks cannot be edited"),
+        )
+
     patch = data.model_dump(exclude_unset=True)
 
     if "status" in patch:

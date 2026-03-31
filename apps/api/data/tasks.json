@@ -1,0 +1,452 @@
+[
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000001",
+    "title": "Set up CI/CD pipeline",
+    "description": "Configure GitHub Actions for automated testing and deployment",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-01T08:00:00+00:00",
+    "updatedAt": "2026-03-05T14:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000002",
+    "title": "Design database schema",
+    "description": "Define tables for users, tasks, and projects",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-01T09:15:00+00:00",
+    "updatedAt": "2026-03-04T11:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000003",
+    "title": "Implement user authentication",
+    "description": "JWT-based auth with refresh tokens",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-02T10:00:00+00:00",
+    "updatedAt": "2026-03-08T16:45:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000004",
+    "title": "Create API documentation",
+    "description": "OpenAPI spec with example requests and responses",
+    "status": "done",
+    "priority": "medium",
+    "createdAt": "2026-03-02T11:30:00+00:00",
+    "updatedAt": "2026-03-07T09:20:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000005",
+    "title": "Set up error monitoring",
+    "description": "Integrate Sentry for backend error tracking",
+    "status": "done",
+    "priority": "medium",
+    "createdAt": "2026-03-03T08:45:00+00:00",
+    "updatedAt": "2026-03-06T13:10:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000006",
+    "title": "Write unit tests for auth module",
+    "description": "Cover login, register, token refresh, and password reset flows",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-03T14:00:00+00:00",
+    "updatedAt": "2026-03-09T10:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000007",
+    "title": "Configure linting and formatting",
+    "description": "ESLint + Prettier for frontend, Ruff for backend",
+    "status": "done",
+    "priority": "low",
+    "createdAt": "2026-03-04T09:00:00+00:00",
+    "updatedAt": "2026-03-04T15:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000008",
+    "title": "Design landing page wireframe",
+    "description": "Figma mockups for hero, features, and pricing sections",
+    "status": "done",
+    "priority": "medium",
+    "createdAt": "2026-03-05T10:00:00+00:00",
+    "updatedAt": "2026-03-10T12:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000009",
+    "title": "Implement task CRUD endpoints",
+    "description": "RESTful API for create, read, update, delete tasks",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-05T13:30:00+00:00",
+    "updatedAt": "2026-03-11T17:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000010",
+    "title": "Set up staging environment",
+    "description": "Deploy to staging server with environment variables",
+    "status": "done",
+    "priority": "medium",
+    "createdAt": "2026-03-06T08:00:00+00:00",
+    "updatedAt": "2026-03-10T14:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000011",
+    "title": "Add rate limiting to API",
+    "description": "Prevent abuse with per-IP rate limits on auth endpoints",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "2026-03-07T09:00:00+00:00",
+    "updatedAt": "2026-03-12T11:45:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000012",
+    "title": "Implement search functionality",
+    "description": "Full-text search across task titles and descriptions",
+    "status": "done",
+    "priority": "medium",
+    "createdAt": "2026-03-07T14:00:00+00:00",
+    "updatedAt": "2026-03-13T16:20:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000013",
+    "title": "Optimize frontend bundle size",
+    "description": "Tree-shaking, code splitting, and lazy loading",
+    "status": "in-progress",
+    "priority": "medium",
+    "createdAt": "2026-03-08T10:00:00+00:00",
+    "updatedAt": "2026-03-28T09:15:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000014",
+    "title": "Add pagination to task list API",
+    "description": "Server-side pagination with page/limit query params",
+    "status": "in-progress",
+    "priority": "high",
+    "createdAt": "2026-03-09T08:30:00+00:00",
+    "updatedAt": "2026-03-29T14:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000015",
+    "title": "Write integration tests for task endpoints",
+    "description": "Test all CRUD operations with httpx test client",
+    "status": "in-progress",
+    "priority": "high",
+    "createdAt": "2026-03-10T09:00:00+00:00",
+    "updatedAt": "2026-03-30T10:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000016",
+    "title": "Implement dark mode toggle",
+    "description": "Theme switching with localStorage persistence",
+    "status": "in-progress",
+    "priority": "medium",
+    "createdAt": "2026-03-10T14:00:00+00:00",
+    "updatedAt": "2026-03-29T16:45:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000017",
+    "title": "Build notification toast component",
+    "description": "Animated toasts with success, error, and info variants",
+    "status": "in-progress",
+    "priority": "medium",
+    "createdAt": "2026-03-11T10:30:00+00:00",
+    "updatedAt": "2026-03-28T11:20:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000018",
+    "title": "Add keyboard shortcuts",
+    "description": "N for new task, E for edit, / for search focus",
+    "status": "in-progress",
+    "priority": "low",
+    "createdAt": "2026-03-12T09:00:00+00:00",
+    "updatedAt": "2026-03-27T15:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000019",
+    "title": "Implement drag-and-drop for board view",
+    "description": "Native HTML drag API with status transition validation",
+    "status": "in-progress",
+    "priority": "high",
+    "createdAt": "2026-03-13T08:00:00+00:00",
+    "updatedAt": "2026-03-30T13:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000020",
+    "title": "Create onboarding tutorial",
+    "description": "First-time user walkthrough with tooltips",
+    "status": "in-progress",
+    "priority": "low",
+    "createdAt": "2026-03-14T11:00:00+00:00",
+    "updatedAt": "2026-03-26T10:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000021",
+    "title": "Add task due dates",
+    "description": "Date picker with overdue highlighting",
+    "status": "in-progress",
+    "priority": "medium",
+    "createdAt": "2026-03-15T09:30:00+00:00",
+    "updatedAt": "2026-03-29T08:45:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000022",
+    "title": "Implement bulk task actions",
+    "description": "Select multiple tasks for delete or status change",
+    "status": "in-progress",
+    "priority": "medium",
+    "createdAt": "2026-03-16T10:00:00+00:00",
+    "updatedAt": "2026-03-30T11:15:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000023",
+    "title": "Add export to CSV",
+    "description": "Download task list as CSV file",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-17T08:00:00+00:00",
+    "updatedAt": "2026-03-17T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000024",
+    "title": "Implement task comments",
+    "description": "Threaded comments on individual tasks",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-17T09:30:00+00:00",
+    "updatedAt": "2026-03-17T09:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000025",
+    "title": "Add file attachments to tasks",
+    "description": "Upload and preview images, PDFs, and documents",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-18T10:00:00+00:00",
+    "updatedAt": "2026-03-18T10:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000026",
+    "title": "Build dashboard with task analytics",
+    "description": "Charts showing completion rate, velocity, and breakdown by priority",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-18T14:00:00+00:00",
+    "updatedAt": "2026-03-18T14:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000027",
+    "title": "Implement task labels/tags",
+    "description": "Color-coded labels for task categorisation",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-19T09:00:00+00:00",
+    "updatedAt": "2026-03-19T09:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000028",
+    "title": "Add task assignment to users",
+    "description": "Assign tasks to team members with avatar display",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-19T11:30:00+00:00",
+    "updatedAt": "2026-03-19T11:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000029",
+    "title": "Build email notification system",
+    "description": "Send emails for task assignments and due date reminders",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-20T08:00:00+00:00",
+    "updatedAt": "2026-03-20T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000030",
+    "title": "Implement activity log",
+    "description": "Track all task changes with timestamps and user info",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-20T10:30:00+00:00",
+    "updatedAt": "2026-03-20T10:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000031",
+    "title": "Add task subtasks/checklists",
+    "description": "Nested subtasks with completion tracking",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-21T09:00:00+00:00",
+    "updatedAt": "2026-03-21T09:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000032",
+    "title": "Implement task templates",
+    "description": "Reusable templates for recurring task types",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-21T11:00:00+00:00",
+    "updatedAt": "2026-03-21T11:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000033",
+    "title": "Add WebSocket real-time updates",
+    "description": "Push task changes to all connected clients",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-22T08:30:00+00:00",
+    "updatedAt": "2026-03-22T08:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000034",
+    "title": "Build mobile-responsive navigation",
+    "description": "Hamburger menu and bottom nav for mobile screens",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-22T10:00:00+00:00",
+    "updatedAt": "2026-03-22T10:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000035",
+    "title": "Implement task archiving",
+    "description": "Move completed tasks to archive instead of deletion",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-23T09:00:00+00:00",
+    "updatedAt": "2026-03-23T09:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000036",
+    "title": "Add multi-language support (i18n)",
+    "description": "English and Spanish to start, with locale detection",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-23T11:30:00+00:00",
+    "updatedAt": "2026-03-23T11:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000037",
+    "title": "Implement task dependencies",
+    "description": "Block tasks until their dependencies are completed",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-24T08:00:00+00:00",
+    "updatedAt": "2026-03-24T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000038",
+    "title": "Build settings page",
+    "description": "User preferences for theme, notifications, and display",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-24T10:30:00+00:00",
+    "updatedAt": "2026-03-24T10:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000039",
+    "title": "Add request caching layer",
+    "description": "ETag-based caching for GET endpoints to reduce server load",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-25T09:00:00+00:00",
+    "updatedAt": "2026-03-25T09:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000040",
+    "title": "Implement project/workspace grouping",
+    "description": "Group tasks into projects with separate boards",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-25T11:00:00+00:00",
+    "updatedAt": "2026-03-25T11:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000041",
+    "title": "Add data backup and restore",
+    "description": "JSON export/import for full data backup",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-26T08:00:00+00:00",
+    "updatedAt": "2026-03-26T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000042",
+    "title": "Performance audit and optimization",
+    "description": "Lighthouse audit, fix render-blocking resources",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-26T10:30:00+00:00",
+    "updatedAt": "2026-03-26T10:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000043",
+    "title": "Write end-to-end tests with Playwright",
+    "description": "Cover critical paths: create, edit, complete, delete, filter",
+    "status": "in-progress",
+    "priority": "high",
+    "createdAt": "2026-03-27T09:00:00+00:00",
+    "updatedAt": "2026-03-31T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000044",
+    "title": "Improve accessibility (a11y audit)",
+    "description": "Fix contrast issues, add ARIA labels, test with screen reader",
+    "status": "in-progress",
+    "priority": "high",
+    "createdAt": "2026-03-27T11:00:00+00:00",
+    "updatedAt": "2026-03-30T15:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000045",
+    "title": "Set up production deployment",
+    "description": "Docker config, health checks, and zero-downtime deploy",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-28T08:00:00+00:00",
+    "updatedAt": "2026-03-28T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000046",
+    "title": "Add input sanitisation middleware",
+    "description": "Strip HTML tags and sanitise all user inputs",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-28T10:00:00+00:00",
+    "updatedAt": "2026-03-28T10:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000047",
+    "title": "Implement task priority auto-escalation",
+    "description": "Automatically bump priority when approaching due date",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-29T09:00:00+00:00",
+    "updatedAt": "2026-03-29T09:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000048",
+    "title": "Add task time tracking",
+    "description": "Start/stop timer for tracking time spent per task",
+    "status": "todo",
+    "priority": "medium",
+    "createdAt": "2026-03-29T11:30:00+00:00",
+    "updatedAt": "2026-03-29T11:30:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000049",
+    "title": "Create API SDK for third-party integrations",
+    "description": "JavaScript and Python client libraries for the TaskFlow API",
+    "status": "todo",
+    "priority": "low",
+    "createdAt": "2026-03-30T08:00:00+00:00",
+    "updatedAt": "2026-03-30T08:00:00+00:00"
+  },
+  {
+    "id": "a1b2c3d4-0001-4000-8000-000000000050",
+    "title": "Launch beta and collect feedback",
+    "description": "Invite 20 beta users and set up feedback collection form",
+    "status": "todo",
+    "priority": "high",
+    "createdAt": "2026-03-31T09:00:00+00:00",
+    "updatedAt": "2026-03-31T09:00:00+00:00"
+  }
+]
