@@ -1,7 +1,7 @@
 """Shared test fixtures — isolates every test with tmp_path."""
 
 import pytest
-from httpx import ASGITransport, AsyncClient
+from fastapi.testclient import TestClient
 
 from app.core.config import settings
 from app.main import app
@@ -18,9 +18,20 @@ def _isolate_data(tmp_path):
 
 @pytest.fixture
 def client():
-    """Provide a synchronous-style httpx test client."""
-    from httpx import Client
-
-    transport = ASGITransport(app=app)
-    with Client(transport=transport, base_url="http://test") as c:
+    """Synchronous TestClient wired to the FastAPI app."""
+    with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture
+def task(client):
+    """Seed a todo task via HTTP and return its data dict."""
+    res = client.post("/api/tasks", json={"title": "Test task"})
+    return res.json()["data"]
+
+
+@pytest.fixture
+def in_progress_task(client, task):
+    """Seed an in-progress task via HTTP and return its data dict."""
+    res = client.put(f"/api/tasks/{task['id']}", json={"status": "in-progress"})
+    return res.json()["data"]

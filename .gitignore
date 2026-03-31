@@ -225,6 +225,7 @@ apps/web/playwright-report/
 apps/web/.playwright/
 apps/api/test-results/
 apps/api/playwright-report/
+apps/api/tests/e2e/screenshots/
 
 # npm / yarn / pnpm lockfiles (keep package-lock.json if using npm)
 # pnpm-lock.yaml
