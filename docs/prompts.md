@@ -76,17 +76,33 @@ After generating all files, self-review against .github/copilot-instructions.md 
 ```
 @testing-agent Read docs/plan.md section 6, AGENTS.md, and apps/api/app/ source files in full before writing any tests.
 
-Implement the complete test suite for TaskFlow:
+Write tests like a careful human engineer maintaining a real codebase: readable, deterministic, minimal, and production-quality. Prefer behavior and API contract validation over implementation-coupled assertions. Avoid brittle selectors, duplicated coverage across layers, excessive fixture magic, and repetitive boilerplate.
+
+Implement a production-quality, maintainable test suite for TaskFlow that covers all required scenarios without unnecessary duplication:
 
 BACKEND TESTS at apps/api/tests/:
 
-1. conftest.py — client(tmp_path) fixture that sets settings.DATA_FILE to a fresh tmp path, plus task() and in_progress_task() convenience fixtures that seed via the API
-2. unit/test_service.py — test all scenarios from plan.md §6.2: nominal create, missing title, title boundary (1 char valid / 200 valid / 201 invalid), invalid priority enum, invalid status enum, complete from todo→422, complete from done→422, complete from in-progress→200, update invalid transition→422, update valid transition, update unknown id→404, list with status filter, list with priority filter, stats empty store, stats with tasks (counts by_status and by_priority)
-3. unit/test_repository.py — insert/retrieve, get_by_id unknown returns None, update, delete
-4. unit/test_validation.py — Pydantic schema edge cases: TaskCreate with extra fields rejected, TaskUpdate all-optional, title exactly 200 chars valid, title 201 chars invalid
-5. integration/test_routes.py — all 7 HTTP endpoints via TestClient, asserting both status_code AND body["success"] AND key data fields, including the /stats-before-/{id} regression test
-6. e2e/conftest.py — live_servers session fixture that starts both uvicorn and npm run dev, waits for readiness
-7. e2e/test_taskflow.py — all 5 required Playwright scenarios using playwright.sync_api: page load, add task via UI, complete task (seed via API → advance to in-progress via API → click Complete in UI → assert done badge), delete task (seed via API → click Delete → assert row gone), priority filter (seed high+low via API → select high filter → assert only high visible). Use data-testid selectors exclusively. No page.wait_for_timeout().
+1. conftest.py — Provide isolated fixtures for TestClient and seeded task states using tmp_path-backed storage. Never touch real data/tasks.json. Service/repo unit tests should seed through their own layer; HTTP-seeded fixtures (task, in_progress_task) are for integration tests.
 
-After generating all files, verify: no test touches real data/tasks.json, every test is independent, all scenarios from plan.md §6.2 are covered, uv run pytest would pass with ≥80% coverage.
+2. unit/test_validation.py — Pydantic schema edge cases: TaskCreate valid title (1 char, 200 chars), invalid title (empty, 201 chars), invalid enum values, extra fields rejected. TaskUpdate all-optional. Use direct model instantiation, no HTTP.
+
+3. unit/test_service.py — Business logic via service functions directly (not HTTP): nominal create, complete from todo→422, complete from in-progress→done, complete from done→422, valid transition todo→in-progress, invalid transition todo→done→422, unknown id→404, updatedAt changes on mutation, list filter by status, list filter by priority, stats empty store, stats with tasks. Seed through service/repository calls.
+
+4. unit/test_repository.py — Persistence behavior: insert/retrieve, get unknown ID returns None, update, delete.
+
+5. integration/test_routes.py — Full HTTP contract via TestClient. Assert status code AND body["success"] AND key data fields for all endpoints: POST create (201), missing/blank title (400/422), invalid enum (422), GET by id (200), GET unknown (404), PUT update (200), PUT invalid transition (422), PUT unknown (404), DELETE (200 with null data), DELETE unknown (404), POST complete from todo (422), complete from in-progress (200), complete from done (422), GET stats shape and route-ordering regression, GET list with status/priority filters.
+
+6. e2e/conftest.py — Live server session fixture that starts both uvicorn and npm run dev. Poll for readiness with a timeout — no arbitrary sleeps. Fail fast with a clear message if startup fails. Clean up child processes robustly in teardown.
+
+7. e2e/test_taskflow.py — 5 required Playwright scenarios using playwright.sync_api: page load (table or empty-state visible), add task via UI (modal→fill→submit→row appears), complete task (seed in-progress via API→click Complete→done badge, Complete button hidden), delete task (seed via API→click Delete→row gone), priority filter (seed high+low via API→filter high→only high visible). Use data-testid selectors exclusively. Scope row actions by data-task-id. No page.wait_for_timeout(). No order dependence between tests.
+
+After generating all files, verify:
+- No test touches real data/tasks.json
+- Every test is independent — no shared mutable state
+- All scenarios from plan.md §6.2 are covered
+- Backend coverage for app/ is ≥80% (E2E is required but not relied on for backend coverage)
+- E2E tests are deterministic — no arbitrary sleeps, no animation-timing dependence
+- Server startup/teardown is robust with readiness polling
+- No duplicate assertions testing the same contract at multiple layers
+- The suite feels maintainable rather than prompt-shaped
 ```
