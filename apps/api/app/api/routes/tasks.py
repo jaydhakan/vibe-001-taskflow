@@ -1,6 +1,8 @@
 """Task API routes — thin handlers that delegate to the service layer."""
 
-from fastapi import APIRouter
+from typing import Literal
+
+from fastapi import APIRouter, Query
 
 from app.schemas.task import TaskCreate, TaskUpdate
 from app.services import task_service
@@ -11,10 +13,26 @@ router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 
 @router.get("")
 async def list_tasks(
-    status: str | None = None, priority: str | None = None
+    status: Literal["todo", "in-progress", "done"] | None = None,
+    priority: Literal["low", "medium", "high"] | None = None,
+    search: str | None = None,
+    sort: Literal["createdAt", "updatedAt", "title"] = "createdAt",
+    order: Literal["asc", "desc"] = "desc",
+    page: int = Query(default=1, ge=1),
+    limit: int = Query(default=20, ge=1, le=100),
 ) -> dict:
-    """List all tasks, optionally filtered by status and/or priority."""
-    return ok(task_service.list_tasks(status=status, priority=priority))
+    """List tasks with server-side pagination, filtering, search, and sorting."""
+    return ok(
+        task_service.list_tasks(
+            status=status,
+            priority=priority,
+            search=search,
+            sort=sort,
+            order=order,
+            page=page,
+            limit=limit,
+        )
+    )
 
 
 @router.post("", status_code=201)

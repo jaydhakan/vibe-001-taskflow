@@ -15,6 +15,8 @@ VALID_TRANSITIONS: dict[str, list[str]] = {
     "done": [],
 }
 
+ALLOWED_SORT_FIELDS = {"createdAt", "updatedAt", "title"}
+
 
 def _check_transition(current: str, new: str) -> None:
     """Raise 422 if the status transition is not allowed."""
@@ -26,13 +28,13 @@ def _check_transition(current: str, new: str) -> None:
 
 
 def create_task(data: TaskCreate) -> dict:
-    """Create a new task with generated ID and timestamps."""
+    """Create a new task. Status is always 'todo' regardless of input."""
     now = datetime.now(timezone.utc).isoformat()
     task = {
         "id": str(uuid.uuid4()),
         "title": data.title,
         "description": data.description,
-        "status": data.status,
+        "status": "todo",
         "priority": data.priority,
         "createdAt": now,
         "updatedAt": now,
@@ -76,14 +78,54 @@ def complete_task(task_id: str) -> dict:
     return task_repo.update(task_id, {"status": "done", "updatedAt": now})
 
 
-def list_tasks(status: str | None = None, priority: str | None = None) -> list[dict]:
-    """Return all tasks, optionally filtered by status and/or priority."""
+def list_tasks(
+    *,
+    status: str | None = None,
+    priority: str | None = None,
+    search: str | None = None,
+    sort: str = "createdAt",
+    order: str = "desc",
+    page: int = 1,
+    limit: int = 20,
+) -> dict:
+    """Return paginated tasks with server-side filtering, search, and sorting.
+
+    Search is case-insensitive substring match against title and description.
+    Sort must be one of: createdAt, updatedAt, title. Default: createdAt desc.
+    """
     tasks = task_repo.get_all()
+
     if status:
         tasks = [t for t in tasks if t["status"] == status]
     if priority:
         tasks = [t for t in tasks if t["priority"] == priority]
-    return tasks
+
+    if search:
+        q = search.lower()
+        tasks = [
+            t
+            for t in tasks
+            if q in t["title"].lower()
+            or (t.get("description") and q in t["description"].lower())
+        ]
+
+    total = len(tasks)
+
+    tasks.sort(key=lambda t: t.get(sort) or "", reverse=(order == "desc"))
+
+    total_pages = max(1, -(-total // limit))
+    start = (page - 1) * limit
+    items = tasks[start : start + limit]
+
+    return {
+        "items": items,
+        "page": page,
+        "limit": limit,
+        "total": total,
+        "totalPages": total_pages,
+        "hasNext": page < total_pages,
+        "hasPrevious": page > 1,
+    }
 
 
 def get_stats() -> dict:

@@ -6,13 +6,13 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class TaskCreate(BaseModel):
-    """Schema for creating a new task."""
+    """Schema for creating a new task. Status is always 'todo'."""
 
     model_config = ConfigDict(extra="forbid")
 
     title: str = Field(..., min_length=1, max_length=200)
     description: str | None = None
-    status: Literal["todo", "in-progress", "done"] = "todo"
+    status: Literal["todo"] = "todo"
     priority: Literal["low", "medium", "high"] = "medium"
 
 

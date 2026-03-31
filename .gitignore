@@ -244,5 +244,5 @@ apps/api/playwright-report/
 # =============================================================================
 
 # Live task data — never commit real data; data/.gitkeep keeps the dir
-apps/api/data/tasks.json
-apps/api/data/tasks.json.tmp
+apps/data/tasks.json
+apps/data/tasks.json.tmp

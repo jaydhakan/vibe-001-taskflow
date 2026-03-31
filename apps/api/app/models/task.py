@@ -12,6 +12,11 @@ A task is stored as a plain dict with the following shape:
     "updatedAt": str,       # UTC ISO-8601 timestamp
 }
 
+Workflow rules:
+- Tasks are always created with status "todo".
+- Valid transitions: todo → in-progress → done. No reopening.
+- The /complete endpoint only accepts in-progress → done.
+
 No class is needed — Pydantic schemas handle validation,
 and the service layer constructs dicts directly.
 """
