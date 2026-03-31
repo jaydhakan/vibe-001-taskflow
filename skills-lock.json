@@ -1,6 +1,36 @@
 {
   "version": 1,
   "skills": {
+    "agent-browser": {
+      "source": "vercel-labs/agent-browser",
+      "sourceType": "github",
+      "computedHash": "6bee044f51bfe9bcc20e2a779ca2a31fae5c6b0095ad30b264ecef9a27cb3ce6"
+    },
+    "playwright-skill": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "4aaf60d9c94150a0952ac999fc69747c4022a42fd2d4b1e46ecadd3718335fb5"
+    },
+    "tdd-workflow": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "a89a547e13edb6a00a15c34aa1b36b0794254f74b1bfa1729a3063d875461d14"
+    },
+    "testing-patterns": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "a026d53c9111e0861cee7f1a2ea19fa1896a2eb4fd093b51b7dcb6338e7f64c7"
+    },
+    "testing-qa": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "ff9fc70fbaab271ce19eec5bea46b386ecf484ea7e966fd68409b6ec5ced9a78"
+    },
+    "unit-testing-test-generate": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "33d56ab71b01e83250c6f50a4945928d55fc030f2b57a8835aa99adddcae08ab"
+    },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
