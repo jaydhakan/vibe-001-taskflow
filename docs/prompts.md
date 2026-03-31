@@ -35,27 +35,38 @@ After generating all files, review every file against .github/copilot-instructio
 ```
 @ui-agent Read docs/plan.md sections 3 and 5 and AGENTS.md in full before writing any code. The backend API is already running at http://localhost:8000 and proxied via Vite at /api.
 
-Implement the complete Vite + Vanilla JS frontend for TaskFlow at apps/web/ with the following:
+Write this frontend as a careful human engineer would: minimal, readable, production-quality. Avoid unnecessary abstractions, boilerplate, or filler comments. Choose precise names; don't split files for the sake of it.
 
-1. package.json with vite as devDep, scripts: dev / build / preview
-2. vite.config.js — proxy /api to http://localhost:8000 with changeOrigin: true
-3. index.html — semantic HTML with data-testid on every interactive element: add-task-btn, task-modal, title-input, description-input, priority-select, status-select, submit-btn, cancel-btn, task-tbody, empty-state, status-filter, priority-filter, search-input, loader, toast-container
-4. src/styles/variables.css — CSS custom properties: --priority-high #ef4444, --priority-medium #f97316, --priority-low #22c55e, --status-todo #6b7280, --status-in-progress #3b82f6, --status-done #22c55e, plus layout vars
+Implement the complete Vite + Vanilla JS frontend for TaskFlow at apps/web/:
+
+1. package.json — vite as devDep, scripts: dev / build / preview
+2. vite.config.js — proxy /api → http://localhost:8000 with changeOrigin: true
+3. index.html — semantic HTML; every interactive element has a data-testid: add-task-btn, task-modal, title-input, description-input, priority-select, status-select, submit-btn, cancel-btn, task-tbody, empty-state, status-filter, priority-filter, search-input, loader, toast-container; all inputs have associated <label> elements; all buttons have explicit type attribute
+4. src/styles/variables.css — CSS custom properties: --priority-high #ef4444, --priority-medium #f97316, --priority-low #22c55e, --status-todo #6b7280, --status-in-progress #3b82f6, --status-done #22c55e, plus layout/spacing vars
 5. src/styles/main.css + src/styles/components.css — full layout, table, modal, badges, buttons, toasts, loader
-6. src/utils/constants.js, src/utils/format-date.js, src/utils/dom.js (with escapeHtml)
-7. src/services/task-api.js — getTasks, createTask, getTask, updateTask, deleteTask, completeTask, getStats — each checks body.success and throws new Error(body.error.message) on failure, JSDoc on every export
-8. src/state/store.js — getState / setState, no direct mutation, JSDoc on exports
-9. src/components/badge.js — priorityBadge(p), statusBadge(s), JSDoc
-10. src/components/loader.js — showLoader / hideLoader, disables/re-enables all [data-action] buttons
-11. src/components/toast.js — showToast(message, type) with auto-dismiss 3s, role=alert, JSDoc
-12. src/components/task-table.js — event delegation on tbody, escapeHtml on all task fields, hides Complete button when status=done, data-task-id on every row, JSDoc
-13. src/components/task-modal.js — openModal(task, {onSubmit}), closeModal(), front-end validation (title required, ≤200 chars), JSDoc
-14. src/components/filters.js — initFilters(onChange), JSDoc
-15. src/components/search-bar.js — initSearchBar(onChange) with 300ms debounce, JSDoc
-16. src/app.js — full orchestration: init, fetchAndRender, all handlers following showLoader→try→catch(showToast)→finally(hideLoader) pattern, no business logic
-17. src/main.js — imports app.js only
+6. src/utils/dom.js — escapeHtml() to sanitize all user-generated content before innerHTML
+7. src/services/task-api.js — getTasks, createTask, getTask, updateTask, deleteTask, completeTask, getStats; each throws Error(body.error.message) when body.success is false; JSDoc on every export; no direct fetch() calls anywhere else
+8. src/state/store.js — getState / setState; single source of truth; no direct mutation; JSDoc on exports
+9. src/components/badge.js — priorityBadge(priority), statusBadge(status); JSDoc
+10. src/components/loader.js — show() / hide(); disables/re-enables all [data-action] buttons; JSDoc
+11. src/components/toast.js — showToast(message, type) with auto-dismiss at 3s; toast container has aria-live="polite"; JSDoc
+12. src/components/task-table.js — renders tbody via event delegation (replace tbody.onclick, never addEventListener in a loop); escapeHtml on every task field in innerHTML; Complete button hidden when status=done; data-task-id on every row; JSDoc
+13. src/components/task-modal.js — openModal(task, {onSubmit}), closeModal(); focuses first input on open, resets form on close; front-end validation (title required, ≤200 chars); JSDoc
+14. src/components/filters.js — initFilters(onChange); event listeners attached once; JSDoc
+15. src/components/search-bar.js — initSearchBar(onChange) with 300ms debounce; event listener attached once; JSDoc
+16. src/app.js — orchestration only: init() called once; stable DOM roots cached at module scope; every mutation handler follows showLoader → try → catch(showToast) → finally(hideLoader); no business logic
+17. src/main.js — imports and calls app.js init only
 
-After generating all files, review every file against .github/copilot-instructions.md. Confirm: every exported function has JSDoc, every fetch call is in task-api.js only, every API call uses showLoader/hideLoader pattern, no empty catch blocks, all data-testid attributes are present.
+After generating all files, self-review against .github/copilot-instructions.md and AGENTS.md "Frontend Review Checklist". Fix before finishing:
+- All fetch() calls are in task-api.js only
+- Every exported function has meaningful JSDoc (not just a restatement of the function name)
+- Every API call uses loader.show() before await, loader.hide() in finally
+- No empty catch blocks
+- No duplicate event listeners (none registered inside render loops)
+- All user content escaped before innerHTML
+- All data-testid attributes present
+- Modal focuses first input on open, resets on close
+- vite build passes with no errors
 ```
 
 ---

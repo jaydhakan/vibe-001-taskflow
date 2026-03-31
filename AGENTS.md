@@ -200,3 +200,52 @@ Three specialist agents are defined in `.github/agents/`. Use them in Copilot Ag
 - ❌ Skipping status transition validation when updating via PUT
 - ❌ Registering `/{id}` route before `/stats`
 - ❌ Writing to `tasks.json` directly in tests — use `tmp_path`
+
+---
+
+## Human-Quality Code Expectations
+
+These apply to all agents producing code for this project.
+
+- Prefer straightforward code over framework-like abstractions
+- Do not create helper functions unless they reduce actual repetition or improve clarity
+- Avoid repetitive comments and obvious JSDoc that merely restates what the code does
+- Avoid generic names (`handleData`, `renderUI`, `processItem`) when a precise name is possible
+- Keep modules small, but do not split files purely for the sake of splitting
+- Optimize for working software and readability, not prompt compliance
+
+---
+
+## Initialization Discipline (Frontend)
+
+- App initialization is idempotent — `init()` is safe to call once only
+- Event listeners on stable DOM roots (filters, search, add-button, modal) are attached once at init, never re-attached on re-render
+- Table uses event delegation (`tbody.onclick` replaced on render, not `addEventListener` in a loop)
+- Stable DOM roots (modal, tbody) are cached in module scope, not queried inside render functions
+
+---
+
+## Accessibility Requirements (Frontend)
+
+- All form inputs have associated `<label>` elements
+- Modal receives focus on open (first input) and restores it sensibly on close
+- Toast container uses `aria-live="polite"` for screen reader announcements
+- Hidden elements are not keyboard-focusable (`hidden` attribute or `display:none`)
+- All `<button>` elements have explicit `type="button"` or `type="submit"`
+
+---
+
+## Frontend Review Checklist
+
+Before finishing any frontend work, verify:
+
+- [ ] All `fetch()` calls are in `task-api.js` only
+- [ ] Every exported function has useful (not filler) JSDoc
+- [ ] Every API call follows `showLoader → try → catch(showToast) → finally(hideLoader)`
+- [ ] No empty `catch` blocks
+- [ ] No direct state mutation outside `setState()`
+- [ ] All user content is escaped before `innerHTML`
+- [ ] All required `data-testid` attributes are present
+- [ ] No duplicate event listeners after re-render
+- [ ] Modal focuses first input on open; form resets on close
+- [ ] `vite build` passes with no errors
