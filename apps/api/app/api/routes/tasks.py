@@ -20,7 +20,7 @@ async def list_tasks(
     sort: Literal["createdAt", "updatedAt", "title"] = "createdAt",
     order: Literal["asc", "desc"] = "desc",
     page: int = Query(default=1, ge=1),
-    limit: int = Query(default=20, ge=1, le=500),
+    limit: int = Query(default=20, ge=1, le=100),
 ) -> dict:
     """List tasks with server-side pagination, filtering, search, and sorting."""
     return ok(

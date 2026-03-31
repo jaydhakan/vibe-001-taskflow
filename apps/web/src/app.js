@@ -40,7 +40,7 @@ async function refreshTasks() {
   const { query, view } = getState();
   // Board view needs all tasks (no pagination, no status filter) to fill all 3 columns
   const boardQuery = view === 'board'
-    ? { ...query, limit: 200, page: 1, status: '' }
+    ? { ...query, limit: 100, page: 1, status: '' }
     : query;
   const result = await taskApi.getTasks(boardQuery);
   setState({

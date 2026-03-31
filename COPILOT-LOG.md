@@ -113,10 +113,16 @@
 > Then fix every issue and log both what was found and what was changed.
 
 **Issues found:**
-- _[TODO: list each issue Copilot identified]_
+
+1. `apps/api/app/api/routes/tasks.py` line 23 — `limit` query param declared with `le=500`, allowing pages of up to 500 items. Violates Rule 3 (inconsistent contract): the documented API cap is 100 and the service layer was designed around that bound.
+
+2. `apps/api/app/api/routes/tasks.py` (POST `""` and PUT `/{task_id}`) — Pydantic v2 raises `422 Unprocessable Entity` for all schema validation failures, including a blank or missing `title`. Rule 3 requires `400` when title is missing or blank. No override existed, so a missing title was returning 422 instead of 400.
 
 **Fixes applied:**
-- _[TODO: describe each fix made]_
+
+1. `apps/api/app/api/routes/tasks.py` line 23 — Changed `le=500` → `le=100` on the `limit` `Query` param so the HTTP contract matches the documented and service-layer maximum.
+
+2. `apps/api/app/main.py` — Added a `RequestValidationError` exception handler. It iterates the Pydantic error list: if any error is on the `title` field it returns `400` with the standard `err(msg)` envelope; all other validation failures fall through to `422`. This keeps the correct HTTP semantics without coupling validation logic into route handlers.
 
 ---
 
