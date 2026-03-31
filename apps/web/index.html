@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="/src/styles/variables.css" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <h1>TaskFlow</h1>
+      <button
+        id="add-task-btn"
+        type="button"
+        class="btn btn-primary"
+        data-testid="add-task-btn"
+        data-action="add"
+      >+ Add Task</button>
+    </header>
+
+    <div class="controls">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="status-filter">Status</label>
+          <select id="status-filter" data-testid="status-filter">
+            <option value="">All statuses</option>
+            <option value="todo">Todo</option>
+            <option value="in-progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="priority-filter">Priority</label>
+          <select id="priority-filter" data-testid="priority-filter">
+            <option value="">All priorities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="search-group">
+        <label for="search-input" class="sr-only">Search tasks</label>
+        <input
+          type="search"
+          id="search-input"
+          data-testid="search-input"
+          placeholder="Search tasks…"
+        />
+      </div>
+    </div>
+
+    <main>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody data-testid="task-tbody"></tbody>
+      </table>
+    </main>
+  </div>
+
+  <!-- Task modal -->
+  <dialog id="task-modal" data-testid="task-modal" aria-labelledby="modal-heading">
+    <div class="modal-content">
+      <h2 id="modal-heading">Add Task</h2>
+      <form id="task-form" novalidate>
+        <div class="form-group">
+          <label for="title-input">Title <span aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="title-input"
+            data-testid="title-input"
+            maxlength="200"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description-input">Description</label>
+          <textarea
+            id="description-input"
+            data-testid="description-input"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="priority-select">Priority</label>
+            <select id="priority-select" data-testid="priority-select">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="status-select">Status</label>
+            <select id="status-select" data-testid="status-select">
+              <option value="todo" selected>Todo</option>
+              <option value="in-progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancel-btn" class="btn" data-testid="cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-testid="submit-btn" data-action="submit">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Full-page loading overlay -->
+  <div id="loader" data-testid="loader" class="loader-overlay" hidden aria-label="Loading">
+    <div class="spinner" role="status"></div>
+  </div>
+
+  <!-- Toast notifications -->
+  <div
+    id="toast-container"
+    data-testid="toast-container"
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="false"
+  ></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
