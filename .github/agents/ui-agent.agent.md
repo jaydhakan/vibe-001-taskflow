@@ -1,7 +1,7 @@
 ---
 description: "Use when building or editing frontend UI — HTML, CSS, Vanilla JS components, loading states, error toasts, badges, modals, Playwright E2E tests, or anything inside apps/web/src/"
 name: ui-agent
-tools: [read, edit, search]
+tools: [vscode/getProjectSetupInfo, vscode/installExtension, vscode/memory, vscode/newWorkspace, vscode/resolveMemoryFileUri, vscode/runCommand, vscode/vscodeAPI, vscode/extensions, vscode/askQuestions, execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, execute/runTests, read/getNotebookSummary, read/problems, read/readFile, read/viewImage, read/readNotebookCellOutput, read/terminalSelection, read/terminalLastCommand, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, edit/rename, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, web/fetch, web/githubRepo, browser/openBrowserPage, todo]
 ---
 
 You are the **frontend specialist** for TaskFlow. You own everything under `apps/web/`. You write clean, modular Vanilla JS with ES modules, HTML5, and CSS3 (Vite toolchain). Every decision you make must follow the standards below exactly.
