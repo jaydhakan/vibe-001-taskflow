@@ -1,6 +1,7 @@
 import * as taskApi from './services/task-api.js';
 import { getState, setState } from './state/store.js';
 import { renderTable } from './components/task-table.js';
+import { renderPagination } from './components/pagination.js';
 import { openModal, closeModal } from './components/task-modal.js';
 import { initFilters } from './components/filters.js';
 import { initSearchBar } from './components/search-bar.js';
@@ -10,24 +11,39 @@ import { showToast } from './components/toast.js';
 const addBtn = document.getElementById('add-task-btn');
 const cancelBtn = document.getElementById('cancel-btn');
 
-/** Re-renders the table from current state, applying the search text filter client-side. */
+/** Re-renders table and pagination from current state. */
 function render() {
-  const { tasks, searchText } = getState();
-  const visible = searchText
-    ? tasks.filter(t => t.title.toLowerCase().includes(searchText.toLowerCase()))
-    : tasks;
-  renderTable(visible, {
-    onEdit: handleEditTask,
-    onComplete: handleCompleteTask,
-    onDelete: handleDeleteTask,
-  });
+  const { tasks, pagination, query } = getState();
+  const hasActiveQuery = !!(query.search || query.status || query.priority);
+  renderTable(tasks, { onEdit: handleEditTask, onComplete: handleCompleteTask, onDelete: handleDeleteTask }, hasActiveQuery);
+  renderPagination(pagination, query, { onPageChange: handlePageChange, onPageSizeChange: handlePageSizeChange });
 }
 
-/** Fetches the current task list from the API and re-renders. */
+/** Fetches tasks using current query state and re-renders. */
 async function refreshTasks() {
-  const tasks = await taskApi.getTasks(getState().filters);
-  setState({ tasks });
+  const result = await taskApi.getTasks(getState().query);
+  setState({
+    tasks: result.items,
+    pagination: {
+      total: result.total,
+      totalPages: result.totalPages,
+      hasNext: result.hasNext,
+      hasPrevious: result.hasPrevious,
+    },
+  });
   render();
+}
+
+/** Wraps refreshTasks with loader and error handling. */
+async function handleRefresh() {
+  loader.show();
+  try {
+    await refreshTasks();
+  } catch (err) {
+    showToast(err.message || 'Failed to load tasks', 'error');
+  } finally {
+    loader.hide();
+  }
 }
 
 function handleAddTask() {
@@ -55,6 +71,7 @@ function handleEditTask(taskId) {
 
   openModal(task, {
     onSubmit: async (data) => {
+      if (data.status === task.status) delete data.status;
       loader.show();
       try {
         await taskApi.updateTask(taskId, data);
@@ -98,23 +115,28 @@ async function handleDeleteTask(taskId) {
   }
 }
 
-/** @param {{ status: string, priority: string }} filters */
-async function handleFiltersChange(filters) {
-  setState({ filters });
-  loader.show();
-  try {
-    await refreshTasks();
-  } catch (err) {
-    showToast(err.message || 'Failed to load tasks', 'error');
-  } finally {
-    loader.hide();
-  }
+/** @param {{ status: string, priority: string, sort: string, order: string }} filters */
+function handleFiltersChange({ status, priority, sort, order }) {
+  setState({ query: { ...getState().query, status, priority, sort, order, page: 1 } });
+  handleRefresh();
 }
 
 /** @param {string} text */
 function handleSearchChange(text) {
-  setState({ searchText: text });
-  render();
+  setState({ query: { ...getState().query, search: text, page: 1 } });
+  handleRefresh();
+}
+
+/** @param {number} page */
+function handlePageChange(page) {
+  setState({ query: { ...getState().query, page } });
+  handleRefresh();
+}
+
+/** @param {number} limit */
+function handlePageSizeChange(limit) {
+  setState({ query: { ...getState().query, limit, page: 1 } });
+  handleRefresh();
 }
 
 /** Initialises the app. Must be called exactly once. */
@@ -123,13 +145,5 @@ export async function init() {
   cancelBtn.addEventListener('click', closeModal);
   initFilters(handleFiltersChange);
   initSearchBar(handleSearchChange);
-
-  loader.show();
-  try {
-    await refreshTasks();
-  } catch (err) {
-    showToast(err.message || 'Failed to load tasks', 'error');
-  } finally {
-    loader.hide();
-  }
+  await handleRefresh();
 }

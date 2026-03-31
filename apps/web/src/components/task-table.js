@@ -16,15 +16,19 @@ function formatDate(iso) {
 /**
  * Re-renders the task list into the table body and wires action delegation.
  * tbody.onclick is replaced on each render — no duplicate listeners accumulate.
- * @param {object[]} tasks - Tasks to display (already search-filtered).
+ * @param {object[]} tasks - Tasks to display.
  * @param {{ onEdit: (id: string) => void, onComplete: (id: string) => void, onDelete: (id: string) => void }} handlers
+ * @param {boolean} hasActiveQuery - True when search/filters are active (changes empty state message).
  */
-export function renderTable(tasks, { onEdit, onComplete, onDelete }) {
+export function renderTable(tasks, { onEdit, onComplete, onDelete }, hasActiveQuery) {
   if (tasks.length === 0) {
+    const msg = hasActiveQuery
+      ? 'No tasks match your filters'
+      : 'No tasks yet — add one to get started';
     tbody.innerHTML = `
       <tr>
         <td colspan="5" class="empty-state-cell" data-testid="empty-state">
-          No tasks found
+          ${msg}
         </td>
       </tr>`;
     tbody.onclick = null;
@@ -32,7 +36,7 @@ export function renderTable(tasks, { onEdit, onComplete, onDelete }) {
   }
 
   tbody.innerHTML = tasks.map(task => {
-    const completeBtn = task.status !== 'done'
+    const completeBtn = task.status === 'in-progress'
       ? `<button type="button" class="btn btn-sm btn-primary" data-action="complete" data-testid="complete-btn">Complete</button>`
       : '';
     return `

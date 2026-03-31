@@ -1,14 +1,12 @@
-/** @type {{ tasks: object[], filters: { status: string, priority: string }, searchText: string, selectedTask: object | null }} */
 let state = {
   tasks: [],
-  filters: { status: '', priority: '' },
-  searchText: '',
+  pagination: { total: 0, totalPages: 1, hasNext: false, hasPrevious: false },
+  query: { page: 1, limit: 20, search: '', status: '', priority: '', sort: 'createdAt', order: 'desc' },
   selectedTask: null,
 };
 
 /**
  * Returns a shallow copy of the current state.
- * Callers must not mutate the returned object.
  * @returns {typeof state}
  */
 export function getState() {
@@ -16,8 +14,7 @@ export function getState() {
 }
 
 /**
- * Merges a partial patch into state.
- * All state changes must go through this function.
+ * Merges a partial patch into state. All state changes must go through this function.
  * @param {Partial<typeof state>} patch
  */
 export function setState(patch) {

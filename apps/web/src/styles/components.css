@@ -177,9 +177,12 @@ dialog::backdrop {
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 12px;
+}
+
+.form-row > * {
+  flex: 1;
 }
 
 .modal-actions {
@@ -251,4 +254,35 @@ dialog::backdrop {
 @keyframes toast-in {
   from { transform: translateX(16px); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Pagination ──────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.pagination:empty {
+  display: none;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-size-select {
+  font-size: 13px;
+  padding: 4px 8px;
+}
+
+.page-indicator {
+  min-width: 64px;
+  text-align: center;
 }

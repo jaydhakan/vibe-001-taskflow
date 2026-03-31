@@ -11,21 +11,24 @@ async function unwrap(res) {
 }
 
 /**
- * Fetches all tasks, optionally filtered by status and/or priority.
- * @param {{ status?: string, priority?: string }} [filters]
- * @returns {Promise<object[]>}
+ * Fetches tasks with server-side pagination, filtering, search, and sorting.
+ * @param {{ page?: number, limit?: number, search?: string, status?: string, priority?: string, sort?: string, order?: string }} [query]
+ * @returns {Promise<{ items: object[], page: number, limit: number, total: number, totalPages: number, hasNext: boolean, hasPrevious: boolean }>}
  */
-export async function getTasks(filters = {}) {
+export async function getTasks(query = {}) {
   const params = new URLSearchParams(
-    Object.fromEntries(Object.entries(filters).filter(([, v]) => v))
+    Object.entries(query)
+      .filter(([, v]) => v !== '' && v != null)
+      .map(([k, v]) => [k, String(v)])
   );
-  const res = await fetch(`/api/tasks${params.size ? `?${params}` : ''}`);
+  const qs = params.toString();
+  const res = await fetch(`/api/tasks${qs ? `?${qs}` : ''}`);
   return unwrap(res);
 }
 
 /**
- * Creates a new task.
- * @param {{ title: string, description?: string, priority?: string, status?: string }} data
+ * Creates a new task. Status is always "todo" (enforced by the backend).
+ * @param {{ title: string, description?: string, priority?: string }} data
  * @returns {Promise<object>}
  */
 export async function createTask(data) {
@@ -48,9 +51,9 @@ export async function getTask(id) {
 }
 
 /**
- * Updates an existing task's fields.
+ * Updates an existing task. Only include status when it actually changed.
  * @param {string} id
- * @param {{ title?: string, description?: string, priority?: string, status?: string }} data
+ * @param {{ title?: string, description?: string | null, priority?: string, status?: string }} data
  * @returns {Promise<object>}
  */
 export async function updateTask(id, data) {
@@ -73,8 +76,7 @@ export async function deleteTask(id) {
 }
 
 /**
- * Marks an in-progress task as done.
- * The backend rejects tasks that are not in-progress (422).
+ * Marks an in-progress task as done. The backend rejects other statuses (422).
  * @param {string} id
  * @returns {Promise<object>}
  */
